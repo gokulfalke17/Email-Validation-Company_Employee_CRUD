@@ -1,5 +1,6 @@
 package com.techpulse.entity;
 
+import com.techpulse.entity.enums.Status;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -18,5 +19,12 @@ public class Employee {
 
     @Column(unique = true)
     private String email;
+
     private String dept;
+
+    private String city;
+
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
 }

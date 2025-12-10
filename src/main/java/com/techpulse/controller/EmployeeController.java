@@ -2,6 +2,7 @@ package com.techpulse.controller;
 
 import com.techpulse.dto.EmployeeRequestDTO;
 import com.techpulse.dto.EmployeeResponseDTO;
+import com.techpulse.entity.enums.Status;
 import com.techpulse.response.ApiResponse;
 import com.techpulse.service.IEmployeeService;
 import jakarta.validation.Valid;
@@ -18,6 +19,25 @@ public class EmployeeController {
 
     @Autowired
     private IEmployeeService service;
+
+
+    @GetMapping("/search")
+    public ResponseEntity<ApiResponse> filterEmployees(
+            @RequestParam(required = false) String empName,
+            @RequestParam(required = false) String dept,
+            @RequestParam(required = false) String email,
+            @RequestParam(required = false) String city,
+            @RequestParam(required = false) Status status,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size
+    ){
+        Page<EmployeeResponseDTO> dto = service.filterEmployees(empName, dept, email, city, status, page, size);
+
+        return  ResponseEntity.ok(
+                new ApiResponse(true, "Employee Filtered Successfully...", dto)
+        );
+    }
+
 
     @PostMapping
     public ResponseEntity<ApiResponse> addEmployee(@Valid @RequestBody EmployeeRequestDTO dto) {

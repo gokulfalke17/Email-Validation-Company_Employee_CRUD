@@ -3,6 +3,7 @@ package com.techpulse.service;
 import com.techpulse.dto.EmployeeRequestDTO;
 import com.techpulse.dto.EmployeeResponseDTO;
 import com.techpulse.entity.Employee;
+import com.techpulse.entity.enums.Status;
 import com.techpulse.exception.EmployeeNotFoundException;
 import com.techpulse.mapper.EmployeeMapper;
 import com.techpulse.repository.IEmployeeRepository;
@@ -22,21 +23,19 @@ public class EmployeeServiceImpl implements IEmployeeService {
     @Autowired
     private IEmployeeRepository repository;
 
-/*
-    @Autowired
-    private ModelMapper mapper;
-
-
-    // Convert DTO <-> Entity
-    private Employee toEntity(EmployeeRequestDTO dto) {
-        return mapper.map(dto, Employee.class);
-    }
-
-    //Convert Entity <-> DTO
-    private EmployeeResponseDTO toDTO(Employee employee) {
-        return mapper.map(employee, EmployeeResponseDTO.class);
-    }
-    */
+// @Autowired
+// private ModelMapper mapper;
+//
+//
+// // Convert DTO <-> Entity
+// private Employee toEntity(EmployeeRequestDTO dto) {
+//     return mapper.map(dto, Employee.class);
+// }
+//
+// //Convert Entity <-> DTO
+// private EmployeeResponseDTO toDTO(Employee employee) {
+//     return mapper.map(employee, EmployeeResponseDTO.class);
+// }
 
     @Autowired
     private EmployeeMapper mapper;
@@ -62,6 +61,22 @@ public class EmployeeServiceImpl implements IEmployeeService {
         dto.setDept(emp.getDept());
         return dto;
     }*/
+
+    @Override
+    public Page<EmployeeResponseDTO> filterEmployees(
+            String empName,
+            String dept,
+            String email,
+            String city,
+            Status status,
+            int page,
+            int size
+    ) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Employee> employeePage = repository.filterEmployees(empName, dept, email, city, status, pageable);
+        return employeePage.map(emp -> mapper.toDTO((emp)));
+    }
+
 
 
 
@@ -124,6 +139,8 @@ public class EmployeeServiceImpl implements IEmployeeService {
         }
         repository.deleteById(empId);
     }
+
+
 
 
     /*
