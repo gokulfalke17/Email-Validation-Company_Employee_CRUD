@@ -1,11 +1,9 @@
 package com.techpulse.dto;
 
 import com.techpulse.entity.enums.Status;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import jdk.jshell.Snippet;
 import lombok.Data;
 
 @Data
@@ -18,8 +16,7 @@ public class EmployeeRequestDTO {
     @NotNull
     private Integer salary;
 
-    @Email
-    @NotBlank
+    @NotBlank(message = "Email is required")
     private String email;
 
     @NotBlank

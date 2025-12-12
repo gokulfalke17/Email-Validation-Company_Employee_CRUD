@@ -6,12 +6,13 @@ import com.techpulse.entity.Employee;
 import com.techpulse.entity.enums.Status;
 import org.springframework.data.domain.Page;
 
+import javax.naming.NamingException;
 import java.util.List;
 
 public interface IEmployeeService {
 
 
-    public EmployeeResponseDTO addEmployee(EmployeeRequestDTO dto);
+    public EmployeeResponseDTO addEmployee(EmployeeRequestDTO dto) throws NamingException;
     public List<EmployeeResponseDTO> getEmployees();
     public Page<EmployeeResponseDTO> getEmployees(int page, int size);
     public EmployeeResponseDTO getEmployees(Integer empId);
