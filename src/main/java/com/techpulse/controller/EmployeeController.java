@@ -9,7 +9,6 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.naming.NamingException;
@@ -24,7 +23,6 @@ public class EmployeeController {
 
 
     @GetMapping("/search")
-    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ApiResponse> filterEmployees(
             @RequestParam(required = false) String empName,
             @RequestParam(required = false) String dept,
@@ -43,7 +41,6 @@ public class EmployeeController {
 
 
     @PostMapping
-    @PreAuthorize("hasAnyRole('ADMIN','OWNER')")
     public ResponseEntity<ApiResponse> addEmployee(@Valid @RequestBody EmployeeRequestDTO dto) throws NamingException {
         EmployeeResponseDTO addedEmployee = service.addEmployee(dto);
         return ResponseEntity.ok(
@@ -52,7 +49,6 @@ public class EmployeeController {
     }
 
     @GetMapping
-    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ApiResponse> getEmployees() {
         List<EmployeeResponseDTO> list = service.getEmployees();
         return ResponseEntity.ok(
@@ -61,7 +57,6 @@ public class EmployeeController {
     }
 
     @GetMapping("/pageable")
-    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ApiResponse> getEmployeesPageByPage(
             @RequestParam(required = false, defaultValue = "0") int page,
             @RequestParam(required = false, defaultValue = "5") int size) {
@@ -73,7 +68,6 @@ public class EmployeeController {
     }
 
     @GetMapping("/{empId}")
-    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ApiResponse> getEmployees(@PathVariable Integer empId) {
         EmployeeResponseDTO employee = service.getEmployees(empId);
         return ResponseEntity.ok(
@@ -82,7 +76,6 @@ public class EmployeeController {
     }
 
     @PutMapping("/{empId}")
-    @PreAuthorize("hasAnyRole('ADMIN','OWNER')")
     public ResponseEntity<ApiResponse> updateEmployee(@PathVariable Integer empId, @RequestBody EmployeeRequestDTO dto) {
         EmployeeResponseDTO updatedEmployee = service.updateEmployee(empId, dto);
         return ResponseEntity.ok(
@@ -92,7 +85,6 @@ public class EmployeeController {
 
 
     @DeleteMapping("/{empId}")
-    @PreAuthorize("hasAnyRole('ADMIN','OWNER')")
     public  ResponseEntity<ApiResponse> deleteEmployee(@PathVariable Integer empId) {
         service.deleteEmployee(empId);
         return ResponseEntity.ok(

@@ -7,7 +7,6 @@ import com.techpulse.service.ICompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
@@ -21,7 +20,6 @@ public class CompanyController {
     private ICompanyService service;
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAnyRole('ADMIN','OWNER')")
     public ResponseEntity<ApiResponse> addCompany(@Valid @RequestBody CompanyRequestDTO dto) {
         CompanyResponseDTO addedCompany = service.addCompany(dto);
         return ResponseEntity.ok(
@@ -30,7 +28,6 @@ public class CompanyController {
     }
 
     @GetMapping
-    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ApiResponse> getCompanies() {
         List<CompanyResponseDTO> list = service.getCompanies();
         return ResponseEntity.ok(
@@ -39,7 +36,6 @@ public class CompanyController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ApiResponse> getCompanies(@PathVariable Integer id) {
         CompanyResponseDTO company = service.getCompanies(id);
         return ResponseEntity.ok(
@@ -48,7 +44,6 @@ public class CompanyController {
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAnyRole('ADMIN','OWNER')")
     public ResponseEntity<ApiResponse> updateCompany(@PathVariable Integer id, @Valid @RequestBody CompanyRequestDTO dto) {
         CompanyResponseDTO updateCompanyDetails = service.updateCompanyDetails(id, dto);
         return ResponseEntity.ok(
@@ -57,7 +52,6 @@ public class CompanyController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN','OWNER')")
     public ResponseEntity<ApiResponse> deleteCompany(@PathVariable Integer id) {
         service.deleteCompany(id);
         return ResponseEntity.ok(

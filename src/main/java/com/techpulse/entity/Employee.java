@@ -5,8 +5,6 @@ import com.techpulse.entity.enums.Status;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.Set;
-
 @Entity
 @Data
 public class Employee {
@@ -35,11 +33,5 @@ public class Employee {
     @JsonIgnore
     private Company company;
 
-    // an employee can work on many projects
-    @ManyToMany
-    @JoinTable(name = "employee_project",
-            joinColumns = @JoinColumn(name = "emp_id"),
-            inverseJoinColumns = @JoinColumn(name = "project_id"))
-    @JsonIgnore
-    private Set<Project> projects;
+    // Project feature removed — no project relationship here
 }
