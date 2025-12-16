@@ -1,0 +1,1 @@
+﻿{"success":true,"message":"Email Validation Done Successfully...","data":{"email":"gokul@gmail.com","syntaxValid":true,"domainValid":true,"smtpAcceptsRecipient":false,"hasMax":true,"mxTried":"alt2.gmail-smtp-in.l.google.com.","smtpMessage":"550-5.1.1 The email account that you tried to reach does not exist. Please try","smtpCode":550}}
